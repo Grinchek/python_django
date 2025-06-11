@@ -7,18 +7,18 @@
 </head>
 <body>
     <header class="bg-light py-3 mb-4 border-bottom">
-        <div class="container d-flex justify-content-between">
-            <h1 class="h4">Мій Django Сайт</h1>
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0">Мій Django Сайт</h1>
             <nav>
-                <a class="btn btn-link" href="{% url 'index' %}">Головна</a>
-                <a class="btn btn-link" href="{% url 'about' %}">Про нас</a>
-                <a class="btn btn-link" href="{% url 'login' %}">Вхід</a>
-                <a class="btn btn-link" href="{% url 'register' %}">Реєстрація</a>
+                <a class="btn btn-outline-primary me-2" href="{% url 'index' %}">Головна</a>
+                <a class="btn btn-outline-primary me-2" href="{% url 'about' %}">Про нас</a>
+                <a class="btn btn-outline-success me-2" href="{% url 'login' %}">Вхід</a>
+                <a class="btn btn-outline-secondary" href="{% url 'register' %}">Реєстрація</a>
             </nav>
         </div>
     </header>
 
-    <main class="container">
+    <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>
 </body>
