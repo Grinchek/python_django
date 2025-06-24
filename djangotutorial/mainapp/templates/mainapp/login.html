@@ -3,5 +3,10 @@
 {% block title %}Вхід{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Сторінка входу (у розробці)</h2>
+<h2>Вхід</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Увійти</button>
+</form>
 {% endblock %}

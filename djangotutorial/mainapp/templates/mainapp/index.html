@@ -4,7 +4,15 @@
 
 {% block content %}
 <div class="text-center">
-    <h2>Ласкаво просимо!</h2>
-    <p class="lead">Це головна сторінка сайту. Скористайтесь меню для переходу між сторінками.</p>
+    {% if user.is_authenticated %}
+        <h2>Привіт, {{ user.get_full_name|default:user.username }}!</h2>
+        <p class="lead">Ви увійшли до системи. Можете переглядати та створювати новини.</p>
+        <a class="btn btn-success" href="{% url 'posts' %}">Перейти до новин</a>
+    {% else %}
+        <h2>Ласкаво просимо!</h2>
+        <p class="lead">Щоб створювати новини, увійдіть у свій обліковий запис або зареєструйтесь.</p>
+        <a class="btn btn-primary me-2" href="{% url 'login' %}">Увійти</a>
+        <a class="btn btn-secondary" href="{% url 'register' %}">Реєстрація</a>
+    {% endif %}
 </div>
 {% endblock %}
