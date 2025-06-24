@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Post
+from tinymce.widgets import TinyMCE
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -16,6 +17,8 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label="Пароль", widget=forms.PasswordInput)
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 10}))
+
     class Meta:
         model = Post
         fields = ['title', 'content']

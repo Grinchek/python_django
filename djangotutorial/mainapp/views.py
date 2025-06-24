@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, LoginForm, PostForm
 from .models import UserProfile, Post
+from django.http import HttpResponseForbidden, Http404
 
 def index_view(request):
     return render(request, 'mainapp/index.html')
@@ -56,3 +57,29 @@ def create_post_view(request):
     else:
         form = PostForm()
     return render(request, 'mainapp/create_post.html', {'form': form})
+@login_required
+def edit_post_view(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if post.author.user != request.user:
+        return HttpResponseForbidden("Ви не можете редагувати цей пост.")
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'mainapp/edit_post.html', {'form': form, 'post': post})
+
+@login_required
+def delete_post_view(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+        if post.author.user != request.user:
+            return HttpResponseForbidden("Ви не можете видалити цей пост.")
+        post.delete()
+        return redirect('posts')
+    except Post.DoesNotExist:
+        raise Http404("Пост не знайдено")

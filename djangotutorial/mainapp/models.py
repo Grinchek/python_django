@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 import os
 from django.utils import timezone
+from tinymce.models import HTMLField
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,7 +27,7 @@ class UserProfile(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    content = HTMLField()
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
